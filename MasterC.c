@@ -9,6 +9,9 @@
 #include <stdarg.h>
 // we include this header file for the augument list va_list va_start etc
 
+#include <unistd.h>
+//we include this for STDOUT_FILENO
+
 /* Note: If you dont know how to execute your code here are the steps for linux users
         1. save your file in a .c format
         2. download gcc
@@ -82,6 +85,25 @@ int input(const char *format, ...){ // the format and ...(trail of args) is pass
     va_end(args); // this cleans the augument list
 
     puts("");
+
+    char msg4[] = "This is printed using write\n";
+
+    write(STDOUT_FILENO/*u can also use 1*/ , msg4, sizeof(msg4) - 1); // write is used when communication with kernel is necessary
+
+    //Upcoming Is Assembly
+
+    char msg5[] = "This is Using raw assembly!\n";
+    
+    asm(
+        "mov $1, %%rax\n"    // System call number 1 is sys_write
+        "mov $1, %%rdi\n"    // File descriptor 1 is stdout
+        "mov %0, %%rsi\n"    // Pointer to our message string
+        "mov $28, %%rdx\n"   // Length of our string /n is considered as 1 character
+        "syscall\n"          // Trigger kernel execution
+        :
+        : "r"(msg5)
+        : "%rax", "%rdi", "%rsi", "%rdx"
+    );
 
     return 0;
     // since your function is an int it returns an 0 value when executed this value doesnt appear generally but appears when assigned the fuction to a variable
