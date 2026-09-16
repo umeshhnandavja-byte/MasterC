@@ -6,6 +6,9 @@
 #include <stdio.h>
 // we include this header file to our program for printf(), scanf() etc
 
+#include <stdarg.h>
+// we include this header file for the augument list va_list va_start etc
+
 /* Note: If you dont know how to execute your code here are the steps for linux users
         1. save your file in a .c format
         2. download gcc
@@ -19,7 +22,7 @@
 */
 
 //Ways to Display output to Terminal
-int print(){
+int input(const char *format, ...){ // the format and ...(trail of args) is passed to function so we can use them inside function
     // here we are declaring(creating) a function named print
 
     char msg1[] = "User"; 
@@ -33,40 +36,64 @@ int print(){
 
     char msg2[] = "How are you";
     puts(msg2);
-    //puts is also used same as printf but it is cleaner and faster than printf and also adds \n which is a newline
+    // puts is also used same as printf but it is cleaner and faster than printf and also adds \n which is a newline
 
     char msg3 = 'C';
     putchar(msg3);
     putchar('\n');
-    //put char is the efficient way to print only a single character
+    // put char is the efficient way to print only a single character
 
     FILE *file = fopen("msg.txt", "w");
-    //FILE is used to specify a variable of type file and *file represents file is a pointer points towards the file
-    //fopen is used to open a file here msg.txt is the file and you can see it in the repo we are goin to write into it , w is the mode which is  write
+    // FILE is used to specify a variable of type file and *file represents file is a pointer points towards the file
+    // fopen is used to open a file here msg.txt is the file and you can see it in the repo we are goin to write into it , w is the mode which is  write
     
     if(file != NULL){
         fputs("Hello this is a fputs Command \n", file);
-        //fputs is used to write the given string variable to file but you must specify which file to write
+        // fputs is used to write the given string variable to file but you must specify which file to write
 
         fprintf(file, "This is a %s command \n", "fprintf");
-        //fprintf also used same as fputs
+        // fprintf also used same as fputs
+
+        // fputc also one of them
 
         fclose(file);
-        //fclose is used to clean our pointer which is pointing towards our file
-    } 
-    //if() is used to check if a condition is true here file != NULL NULL means nothing here the code inside {} which belongs to if executes only if the file given is not nothing
+        // fclose is used to clean our pointer which is pointing towards our file
+    }
+    // if() is used to check if a condition is true here file != NULL NULL means nothing here the code inside {} which belongs to if executes only if the file given is not nothing
+
+    char username[] = "King";
+    char filename[50];
+    int userid = 24;
+    // we declare variables so that it would be easier for others to update the values without reading and updating every function
+
+    snprintf(filename, sizeof(filename), "MasterC_%s_%d.txt", username, userid);
+    // saves the text into the given string 
+
+    printf("%s\n", filename);
+
+    puts("King: ");
+
+    va_list args; // args are pointed here
+
+    va_start(args, format); // this initializes argument list
+
+    vprintf(format, args); // pass the format and arguments to the vprintf for output
+
+    va_end(args); // this cleans the augument list
+
+    puts("");
 
     return 0;
-    //since your function is an int it returns an 0 value when executed this value doesnt appear generally but appears when assigned the fuction to a variable
+    // since your function is an int it returns an 0 value when executed this value doesnt appear generally but appears when assigned the fuction to a variable
 }
 
-//Upnext someother print functions - 12-09-2026 01:55:35
+// Upnext input functions - 17-09-2026 03:46:50
 
 int main(){
-    //this main block is where we take our functions to execute
+    // this main block is where we take our functions to execute
 
-    print();
-    //since we created a function named print so we represent it as print();
+    input("This is a message");
+    // since we created a function named print so we represent it as print();
 
     return 0;
 } 
