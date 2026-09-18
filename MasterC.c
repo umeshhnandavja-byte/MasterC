@@ -25,7 +25,7 @@
 */
 
 //Ways to Display output to Terminal
-int input(const char *format, ...){ // the format and ...(trail of args) is passed to function so we can use them inside function
+int output(const char *format, ...){ // the format and ...(trail of args) is passed to function so we can use them inside function
     // here we are declaring(creating) a function named print
 
     char msg1[] = "User"; 
@@ -109,12 +109,51 @@ int input(const char *format, ...){ // the format and ...(trail of args) is pass
     // since your function is an int it returns an 0 value when executed this value doesnt appear generally but appears when assigned the fuction to a variable
 }
 
-// Upnext input functions - 17-09-2026 03:46:50
+int input(){
+    
+    int marks;
+    // you need a variable to store the output data
+
+    printf("Enter Your Marks");
+    scanf("%d", &marks);
+    // we use scanf to store some data or give input to a program in a variable
+    // this is a formatted input
+    /* Note - & sign is compulsory or you get a segmentation error it represents the address of variable where the number is storing 
+        For strings you dont need an & symbol 
+        just removing the &variable reads the data but doest store it*/
+    char choice, choice1, choice2;
+    // you can declare multiple variables of same datatype by seperating them with a comma
+
+    printf("Enter a Character");
+    choice = getchar();
+    // getchar is used to get a character from user
+    // the advantage you get with this get functions command is you can put it directly inside printf Like this printf("The Character you entered is %c\n", getchar());
+    printf("The Character you entered is %c\n", choice);
+    
+    printf("Enter a Character");
+    choice1 = getch();
+    // getch is used to get a character from user bu the user doesnt need to hit enter it just stores
+    printf("The Character you entered is %c\n", choice1);
+
+    printf("Enter a Character");
+    choice2 = getche();
+    // getche is same as getch but it give chracter output that you gave to the screen
+    printf("The Character you entered is %c\n", choice2);
+
+    printf("Enter Your Name");
+    char name[50];
+    fgets(name, sizeof(name), stdin); 
+    //fgets it reads the string untill it encounters a new line or the length of string is complete
+    
+    return 0;
+}
+
+// Upnext input functions for files and read() - 23-09-2026 23:08:50
 
 int main(){
     // this main block is where we take our functions to execute
 
-    input("This is a message");
+    output("This is a message");
     // since we created a function named print so we represent it as print();
 
     return 0;
