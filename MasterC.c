@@ -10,7 +10,10 @@
 // we include this header file for the augument list va_list va_start etc
 
 #include <unistd.h>
-//we include this for STDOUT_FILENO
+//we include this for STDOUT_FILENO and  read()
+
+#include <fcntl.h> 
+//we include this for O_RDONLY
 
 /* Note: If you dont know how to execute your code here are the steps for linux users
         1. save your file in a .c format
@@ -51,6 +54,7 @@ int output(const char *format, ...){ // the format and ...(trail of args) is pas
     // fopen is used to open a file here msg.txt is the file and you can see it in the repo we are goin to write into it , w is the mode which is  write
     
     if(file != NULL){
+        //this if checks if file address is empty or not it enters if the address is not empty
         fputs("Hello this is a fputs Command \n", file);
         // fputs is used to write the given string variable to file but you must specify which file to write
 
@@ -63,6 +67,18 @@ int output(const char *format, ...){ // the format and ...(trail of args) is pas
         // fclose is used to clean our pointer which is pointing towards our file
     }
     // if() is used to check if a condition is true here file != NULL NULL means nothing here the code inside {} which belongs to if executes only if the file given is not nothing
+
+    FILE *file = fopen("msg.txt", "r");
+    char buffer[100];
+
+    fgets(buffer, 100, file);
+    // buffer is where the text of file is stored in 100 chracters and the 100 in f gets tells that stop reading after 100 characters in the FILE mentioned with file variable
+
+    FILE *file = fopen("data.bin", "rb");
+    int numbers[5];
+
+    fread(numbers, sizeof(int), 5, file);
+    // here f read reads raw binary data of data.bin and take 5 elements from the file used to read images or raw binary
 
     char username[] = "King";
     char filename[50];
@@ -89,6 +105,11 @@ int output(const char *format, ...){ // the format and ...(trail of args) is pas
     char msg4[] = "This is printed using write\n";
 
     write(STDOUT_FILENO/*u can also use 1*/ , msg4, sizeof(msg4) - 1); // write is used when communication with kernel is necessary
+
+    int fd = open("data.txt", O_RDONLY);
+    char buffer[100];
+
+    read(fd, buffer, 100);
 
     //Upcoming Is Assembly
 
@@ -121,6 +142,7 @@ int input(){
     /* Note - & sign is compulsory or you get a segmentation error it represents the address of variable where the number is storing 
         For strings you dont need an & symbol 
         just removing the &variable reads the data but doest store it*/
+
     char choice, choice1, choice2;
     // you can declare multiple variables of same datatype by seperating them with a comma
 
@@ -144,11 +166,26 @@ int input(){
     char name[50];
     fgets(name, sizeof(name), stdin); 
     //fgets it reads the string untill it encounters a new line or the length of string is complete
+
+    // fputs() and fprintf() are mentioned in Outputs() function
+
+    FILE *file = fopen("data.txt", "w");
+    int ch = 'A';
+
+    fputc(ch, file);
+    // fputc() is used to put character into a file
+
+    FILE *file = fopen("data.bin", "wb");
+    int numbers[5] = {10, 20, 30, 40, 50};
+
+    fwrite(numbers, sizeof(int), 5, file);
+    // fwrite is used to write raw binary data
+
     
     return 0;
 }
 
-// Upnext input functions for files and read() - 23-09-2026 23:08:50
+// Upnext Control FLow Functions - 11-10-2026 11:42:20
 
 int main(){
     // this main block is where we take our functions to execute
@@ -157,4 +194,13 @@ int main(){
     // since we created a function named print so we represent it as print();
 
     return 0;
-} 
+}
+
+/*  Functions Planning to add
+    Control Flow(Loops, Conditions, Jump statements)
+    Variables(Modifiers & CLasses)
+    Strcutures
+    Operations
+    String manipulation
+    math functions
+  */
